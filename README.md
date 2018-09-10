@@ -1,1 +1,1 @@
-# simple db app with mysql-nodejs-sequelize
+# simple db app
