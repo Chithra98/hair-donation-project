@@ -6,8 +6,7 @@ router.get('/', function(req,res){
         message : "Success"
     });
 })
-router.get('/user', function(req,res){
-    res.render('index');
-})
-router.use(('/authenticate'),require('./authentication'));
+router.use(('/signin'),require('./signin'));
+router.use(('/signup'),require('./signup'));
+
 module.exports = router;

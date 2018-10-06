@@ -6,6 +6,11 @@ var routes = require('./routes/index');
 var path = require('path');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
+var passport = require('passport');
+
+app.use(passport.initialize());
+
+require('./config/passport.js')(passport);
 
 app.set('views', path.join(__dirname, 'views'));
 app.use(bodyParser.json());
@@ -15,12 +20,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine','ejs');
 app.use('/', routes);
 
-
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
 
 var port = 3000;
 app.set('port', port);
