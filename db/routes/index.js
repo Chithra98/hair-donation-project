@@ -9,5 +9,11 @@ router.get('/', function(req,res){
 router.get('/user', function(req,res){
     res.render('index');
 })
+router.get('/ad', function(req,res)
+{
+    res.render('admin');
+})
 router.use(('/authenticate'),require('./authentication'));
+router.use(('/admin'),require('./admin'));
+
 module.exports = router;

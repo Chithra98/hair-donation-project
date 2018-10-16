@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
 var users = require('../../../models').user;
+var methods = require('../../../methods');
 var config = require('../../../config/config.js');
 var jwt=require('jsonwebtoken');
 var token;
+var username;
 
 router.get('/', function(req,res){
     res.status(200).json({
@@ -14,7 +16,7 @@ router.get('/user', function(req,res){
     res.render('index');
 })
 router.post('/', function(req,res) {
-
+    username = req.body.username;
     users.findOne({where:{
         username:req.body.username} }).then( user => {
             
@@ -23,6 +25,12 @@ router.post('/', function(req,res) {
                 res.send({success:false,message:"Authentication failed"});
             }else
             {
+                if(user.verified==false)
+                {
+                    res.send("Your application has been verified yet!!");
+                }
+                else
+                {
           console.log(user);
                 isMatch=users.comparePassword(req.body.password,user);
     
@@ -33,10 +41,7 @@ router.post('/', function(req,res) {
                             });
                         //res.cookie('jwt',token);
                 //res.status(200).send({success: true , token :'JWT ' + token})
-                res.header(token);
-                res.status(200).send({success: true , token :'JWT ' + token})
-
-                  //res.redirect('../../private/test');
+                            res.redirect('./signin/me');
                             
     
                     }
@@ -44,7 +49,7 @@ router.post('/', function(req,res) {
                     {
                         res.send({success:false,message:"passwords did not match"});
                     }
-    
+                }
                 
             }
     
@@ -59,7 +64,13 @@ router.get('/me', function(req, res) {
     jwt.verify(token, config, function(err, decoded) {
       if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
       
-      res.status(200).json({"success": "true"});
+      methods.usermethods.getUserByUsername(username).then((values) =>{
+        console.log(values);
+        res.render('user',{values});
+
+      }).catch((err) =>{
+          console.log(err);
+      })
     });
   });
 
