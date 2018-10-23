@@ -1,7 +1,5 @@
 'use strict';
 
-const bcrypt =  require('bcrypt')
-
 module.exports = (sequelize, DataTypes) => {
   var Fee = sequelize.define('Fee', {
     id: {
@@ -9,21 +7,40 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true,
     },
-    username: {
-      type : DataTypes.STRING(20),
-    },
-    password: {
-      type : DataTypes.STRING,
+    Student_id : {
+      type: DataTypes.INTEGER(),
     },
     lhadmno: {
-      type : DataTypes.STRING,
+      type : DataTypes.STRING(20),
+    },
+    expense:{
+      type: DataTypes.INTEGER(),
+    },
+    fine:{
+      type: DataTypes.INTEGER(),
+
+    },
+    paymentstatus:{
+      type: DataTypes.INTEGER(),
+
     },
     fee: {
-        type : DataTypes.INTEGER,
+        type : DataTypes.INTEGER(),
     },
  
   
   });
+  Fee.associate = function (models) {
+    models.Fee.belongsTo(models.User, {
+      onDelete: 'CASCADE',
+      foreignKey: {
+        name: 'Student_id',
+        allowNull: false
+        // allowNull: false -- already defined
+      },
+    });
+  };
+
 
   return Fee;
 }
