@@ -1,6 +1,7 @@
 const Promise = require('bluebird');
 var models = require('../models');
 var Sequelize = require('sequelize');
+const methods = require('../methods')
 const env       = process.env.NODE_ENV || 'development';
 const config    = require('../config/config.json')[env];
 var sequelize ={};
@@ -55,10 +56,10 @@ usermethods.findByUsername = (username) => { return new Promise((resolve,
   
   usermethods.setAdmno = (mesg,username) => {return new Promise((resolve,
   reject) => {
-    var user = username
-  
+    var name = username
+    console.log("mesg", mesg)
      
-        sequelize.query("UPDATE Users SET lhadmno = :mesg WHERE Users.username = :username", { replacements: { username: [user], mesg:[mesg] }, type: sequelize.QueryTypes.UPDATE } ).then((metadata) => {
+        sequelize.query("UPDATE Users SET lhadmno = :mesg WHERE Users.username = :username", { replacements: { username: [name], mesg:[mesg] }, type: sequelize.QueryTypes.UPDATE } ).then((metadata) => {
           resolve(metadata[1]);
     
         })
@@ -70,4 +71,60 @@ usermethods.findByUsername = (username) => { return new Promise((resolve,
       })  
   }
   
+
+
+
+  usermethods.updateUsers = (info, data) => new Promise((
+  resolve,
+  reject,
+) => {
+  models.user.update(data, {
+    where: {
+      lhadmno: info.lhadmno,
+    },
+  })
+    .then((updated) => {
+      if (updated > 0) {
+        resolve(updated);
+      } else {
+        reject(new Error());
+        // throw ('err')
+      }
+    }).catch((error) => {
+      reject(error);
+    });
+});
+
+usermethods.deleteAllUsers = () => new Promise((
+  resolve,
+  reject,
+) => {
+  models.academics.classes.destroy({
+    where: {},
+  })
+    .then(() => {
+      resolve();
+    })
+    .catch((err) => {
+      reject(err);
+    });
+});
+
+usermethods.deleteUsers = info => new Promise((resolve, reject) => {
+  models.academics.classes.destroy({
+    where: {
+      ladmno : info.lhadmno
+    },
+  }).then((deleted) => {
+    if (deleted === 0) {
+      console.log('error tg');
+      reject(new Error());
+    } else {
+      resolve(deleted);
+    }
+  }).catch((err) => {
+    reject(err);
+  });
+});
+
 module.exports = usermethods;

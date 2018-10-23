@@ -12,9 +12,9 @@ router.get('/enter', function(req,res){
 router.post('/enter', function(req,res) {
     console.log('ok')
 var att = {}
-att.monthid = req.body.monthid;
-att.studentid = req.body.studentid;
-att.attendance = req.body.attendance;
+att.Month_id = req.body.monthid;
+att.Student_id = req.body.studentid;
+att.Attendance = req.body.attendance;
 console.log(att);
 
 methods.attendancemethods.createtable(att)
