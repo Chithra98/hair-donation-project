@@ -19,6 +19,22 @@ module.exports = (sequelize, DataTypes) => {
     lhadmno: {
       type : DataTypes.STRING,
     },
+    roomno: {
+      type : DataTypes.STRING,
+    },
+    department: {
+      type : DataTypes.STRING,
+    },
+    course: {
+      type : DataTypes.STRING,
+    },
+    semester: {
+      type : DataTypes.STRING,
+    },
+    category: {
+      type : DataTypes.STRING,
+    },
+    
     verified : {
       type : DataTypes.BOOLEAN,
       allowNull: false, 

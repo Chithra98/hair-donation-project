@@ -11,9 +11,12 @@ module.exports = (sequelize, DataTypes) => {
     },
     Month_id: {
       type: DataTypes.INTEGER(),
+      unique: "compositeIndex",
     },
     Student_id: {
       type : DataTypes.STRING(20),
+      unique: "compositeIndex",
+
     },
     Attendance: {
       type : DataTypes.INTEGER(),

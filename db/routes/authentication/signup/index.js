@@ -24,7 +24,10 @@ router.post('/',function(req,res){
 
     var user= new users({
       username:req.body.username,
-      password:req.body.password
+      password:req.body.password,
+      course:req.body.course,
+      semester:req.body.semester,
+      category:req.body.category,
 
     });
     bcrypt.hash(user.password, saltRounds, function(err, hash) {
