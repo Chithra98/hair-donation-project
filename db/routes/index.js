@@ -7,7 +7,13 @@ router.get('/', function(req,res){
     });
 })
 router.get('/user', function(req,res){
-    res.render('index');
+    res.render('home');
+})
+router.get('/reg', function(req,res){
+    res.render('signup');
+})
+router.get('/sig', function(req,res){
+    res.render('signin');
 })
 router.get('/ad', function(req,res)
 {

@@ -27,7 +27,7 @@ router.post('/', function(req,res) {
             {
                 if(user.verified==false)
                 {
-                    res.send("Your application has been verified yet!!");
+                    res.send("Your application has not been verified yet!!");
                 }
                 else
                 {

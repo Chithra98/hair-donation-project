@@ -51,4 +51,16 @@ usermethods.findByUsername = (username) => new Promise((resolve,
   
   })
 
+  
+  usermethods.setAdmno = (mesg,username) => new Promise((resolve,
+  reject) => {
+    sequelize.query("UPDATE Users SET lhadmno = :mesg WHERE Users.username = :username", { replacements: { username: [username], mesg:[mesg] }, type: sequelize.QueryTypes.UPDATE } ).then((metadata) => {
+      resolve(metadata[1]);
+
+    })
+    .catch((err) =>{
+      console.log(err);
+    })
+  })
+
 module.exports = usermethods;

@@ -10,14 +10,15 @@
  
     hellooo world
     <br>
+    
     <% console.log(ret) %>
-    id    username    verified
+    id        username
     <br>
     <% for(var i=0 ; i < ret.length ; i++){ %>
     <form method="post" action="/admin/verify/">
-    <input type="text" name="id"id="id" value= <%= ret[i].dataValues.id %>> 
-    <input type="text" name="username" id="username" value= <%= ret[i].dataValues.username %>> 
-    <% if(ret[i].dataValues.verified==false) { %>
+    <input type="text" name="id"id="id" value= <%= ret[i].dataValues.id %> > 
+    <input type="text" name="username" id="username" value= <%= ret[i].dataValues.username %> >
+        <% if(ret[i].dataValues.verified==false) { %>
     <input class="btn btn-info"type="submit" id="btn1" value="Verify" onclick="msg(btn1)">
     <script>
         function msg(btn1) {
@@ -29,6 +30,7 @@
     <% } else { %>
         <br>
     <% } %>
+       
     </form>
 
     <% } %>

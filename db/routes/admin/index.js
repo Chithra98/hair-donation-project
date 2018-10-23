@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 var methods = require('../../methods');
 var models = require('../../models');
-
+var ad=0;
 router.get('/', function(req,res)
 {
     res.status(200).json({"message" : "success"});
@@ -33,7 +33,10 @@ router.post('/verify/', function(req,res)
     console.log(req.body.username);
     methods.usermethods.findByUsername(req.body.username).then((users) =>{
         console.log(users)
-       
+            ad=ad+1;
+            var mesg = "16lh0"+ad;
+            methods.usermethods.setAdmno(mesg,req.body.username).then((val) =>{
+            console.log(val);
             methods.usermethods.getAllUser()
             .then((user) => {
             var ret;
@@ -41,7 +44,13 @@ router.post('/verify/', function(req,res)
             console.log(user);
                 ret = user;
             res.render('table',{ret});
+            }).catch((err) =>{
+                console.log(err);
             })
+
+        }).catch((err) =>{
+            console.log(err);
+        })
     
         
     })

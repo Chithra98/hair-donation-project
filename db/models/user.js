@@ -19,6 +19,15 @@ module.exports = (sequelize, DataTypes) => {
     lhadmno: {
       type : DataTypes.STRING,
     },
+    roomno: {
+      type: DataTypes.INTEGER(),
+      defaultValue: 0
+
+    },
+    department :{
+      type: DataTypes.STRING,
+
+    },
     verified : {
       type : DataTypes.BOOLEAN,
       allowNull: false, 
