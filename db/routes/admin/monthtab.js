@@ -4,23 +4,23 @@ var methods = require('../../methods')
 
 router.get('/', function(req,res){
     res.status(200).send({"success": "true"})
+    console.log('entered monthtab')
 })
 router.get('/enter', function(req,res){
  
-    res.render('attendance');
+    res.render('monthtab');
 })
 router.post('/enter', function(req,res) {
     console.log('ok')
-var att = {}
-att.Month_id = req.body.monthid;
-att.Student_id = req.body.studentid;
-att.Attendance = req.body.attendance;
-console.log(att);
+var mon = {}
+mon.Monthname = req.body.Monthname;
+mon.Duedate = req.body.Duedate;
+console.log(mon);
 
-methods.attendancemethods.createtable(att)
+methods.monthtabmethods.createtable(mon)
 .then(() =>{
-    console.log('inside attendance methods');
-    res.render('attendance')
+    console.log('inside monthtab methods');
+    res.render('monthtab')
 })
 .catch((err) =>{
     console.log(err);

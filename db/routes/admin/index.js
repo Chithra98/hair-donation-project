@@ -6,6 +6,7 @@ var ad=0;
 router.get('/', function(req,res)
 {
     res.status(200).json({"message" : "success"});
+    console.log('entered index')
 
 })
 router.post('/', function(req,res){
@@ -60,6 +61,6 @@ router.post('/verify/', function(req,res)
     })
 
 })
-
+router.use(('/monthtab'),require('./monthtab'));
 router.use(('/attendance'),require('./attendance'));
 module.exports = router;

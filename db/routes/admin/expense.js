@@ -4,23 +4,27 @@ var methods = require('../../methods')
 
 router.get('/', function(req,res){
     res.status(200).send({"success": "true"})
+    console.log('entered expense')
 })
 router.get('/enter', function(req,res){
  
-    res.render('attendance');
+    res.render('expense');
 })
 router.post('/enter', function(req,res) {
     console.log('ok')
-var att = {}
-att.Month_id = req.body.monthid;
-att.Student_id = req.body.studentid;
-att.Attendance = req.body.attendance;
-console.log(att);
+var exp = {}
+exp.Monthid = req.body.Monthid;
+exp.Electricity = req.body.Electricity;
+exp.Water = req.body.Water;
+exp.Mess = req.body.Mess;
+exp.Rent = req.body.Rent;
+exp.CCF = req.body.CCF;
+console.log(exp);
 
-methods.attendancemethods.createtable(att)
+methods.expensemethods.createtable(exp)
 .then(() =>{
-    console.log('inside attendance methods');
-    res.render('attendance')
+    console.log('inside expense methods');
+    res.render('expense')
 })
 .catch((err) =>{
     console.log(err);
