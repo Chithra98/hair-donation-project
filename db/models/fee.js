@@ -9,8 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     Student_id : {
       type: DataTypes.INTEGER(),
-      unique: 'compositeIndex',
-
+      unique:"compositeIndex",
     },
     lhadmno: {
       type : DataTypes.STRING(20),

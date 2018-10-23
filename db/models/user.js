@@ -19,24 +19,6 @@ module.exports = (sequelize, DataTypes) => {
     lhadmno: {
       type : DataTypes.STRING,
     },
-    roomno: {
-      type: DataTypes.INTEGER(),
-      defaultValue: 0
-
-    },
-    department :{
-      type: DataTypes.STRING,
-
-    },
-    course :{
-      type: DataTypes.STRING,
-    },
-    semester : {
-      type: DataTypes.STRING,
-    },
-    category :{
-      type: DataTypes.STRING,
-    },
     verified : {
       type : DataTypes.BOOLEAN,
       allowNull: false, 
@@ -45,6 +27,14 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   User.hook('beforeCreate' ,function(user) {
+  
+    /*if(user.isNew)
+    {
+     /*var salt = bcrypt.genSaltSync(10);
+      var hash = bcrypt.hashSync(user.password, salt)
+      console.log(hash);
+      user.password=hash;    */
+  
    user.password= bcrypt.hashSync(user.password,bcrypt.genSaltSync(10));
    
   }
@@ -70,5 +60,4 @@ module.exports = (sequelize, DataTypes) => {
   }
   return User;
 }
-
 
