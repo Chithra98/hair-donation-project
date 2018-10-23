@@ -11,6 +11,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER(),
       unique:"compositeIndex",
     },
+    Month_id : {
+      type: DataTypes.INTEGER(),
+      unique:"compositeIndex",
+    },
     lhadmno: {
       type : DataTypes.STRING(20),
     },
@@ -39,6 +43,18 @@ module.exports = (sequelize, DataTypes) => {
       },
     });
   };
+ 
+  Fee.associate = function (models) {
+    models.Fee.belongsTo(models.Monthtab, {
+      onDelete: 'CASCADE',
+      foreignKey: {
+        name: 'Month_id',
+        allowNull: false
+        // allowNull: false -- already defined
+      },
+    });
+  };
+
 
 
   return Fee;
