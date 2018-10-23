@@ -37,5 +37,28 @@ monthtabmethods.dueDifference = (monthid) => new Promise(
               reject(err);
             });
         });
-      };
+      }
+
+  monthtabmethods.updateUsers = (info, data) => new Promise((
+  resolve,
+  reject,
+) => {
+  models.expense.update(data, {
+    where: {
+      Monthid: info.Monthid,
+    },
+  })
+    .then((updated) => {
+      if (updated > 0) {
+        resolve(updated);
+      } else {
+        reject(new Error());
+        // throw ('err')
+      }
+    }).catch((error) => {
+      reject(error);
+    });
+});
+
+
    module.exports = monthtabmethods; 

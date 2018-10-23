@@ -11,11 +11,11 @@ if (config.use_env_variable) {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
-var expensemethods = {};
+var feemethods = {};
 
-expensemethods.findTotal = (monthid) => new Promise(
+feemethods.findFine = (monthid,studentid) => new Promise(
     (resolve, reject) =>{
-            sequelize.query("UPDATE Expenses SET Total=Electricity+Mess+Water+Rent+CCF WHERE Monthid=monthid").then((values) =>{
+            sequelize.query("").then((values) =>{
                 console.log(values);
                 resolve(values);
             })
@@ -25,23 +25,11 @@ expensemethods.findTotal = (monthid) => new Promise(
             })
     })
 
-expensemethods.findOneDay = (monthid,totalattnd) => new Promise(
-    (resolve, reject) =>{
-            sequelize.query("UPDATE Expenses SET Oneday= Total/totalattnd WHERE Monthid=monthid").then((values) =>{
-                console.log(values);
-                resolve(values);
-            })
-            .catch((err) =>{
-                console.log(err);
-                reject(err)
-            })
-    })
-
-   expensemethods.createtable = (info) => {
+   feemethods.createtable = (info) => {
         console.log('inside adding month details');
       
         return new Promise((resolve, reject) => {
-          models.expense.create(info).then((model) => {
+          models.fee.create(info).then((model) => {
             resolve(model);
           })
             .catch((err) => {
@@ -49,13 +37,13 @@ expensemethods.findOneDay = (monthid,totalattnd) => new Promise(
               reject(err);
             });
         });
-      };
+      }
 
-  expensemethods.updateUsers = (info, data) => new Promise((
+  feemethods.updateUsers = (info, data) => new Promise((
   resolve,
   reject,
 ) => {
-  models.expense.update(data, {
+  models.fee.update(data, {
     where: {
       Monthid: info.Monthid,
     },
@@ -72,4 +60,5 @@ expensemethods.findOneDay = (monthid,totalattnd) => new Promise(
     });
 });
 
-   module.exports = expensemethods; 
+
+   module.exports = feemethods; 
