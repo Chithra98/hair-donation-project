@@ -35,6 +35,8 @@ router.post('/verify/', function(req,res)
     methods.usermethods.findByUsername(req.body.username).then((users) =>{
         console.log("users:",users)
             
+            var mesg="16lh0";
+            ad=ad+1;
             mesg=mesg+ad;
             methods.usermethods.setAdmno(mesg,req.body.username).then((val) =>{
             console.log(val);

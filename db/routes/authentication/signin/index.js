@@ -66,8 +66,20 @@ router.get('/me', function(req, res) {
       
       methods.usermethods.getUserByUsername(username).then((values) =>{
         console.log(values);
-        res.render('user',{values});
+        var val = {
+            username : values[0].username,
+            lhadmno : values[0].lhadmno,
 
+        }
+       
+        methods.attmethods(username).then((classes) =>{
+            console.log(classes)
+            val.attendance = classes 
+            res.render('user',{val})
+        })
+        .catch((err) =>{
+            console.log(err)
+        })
       }).catch((err) =>{
           console.log(err);
       })
