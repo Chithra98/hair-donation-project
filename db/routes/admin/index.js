@@ -32,9 +32,9 @@ router.post('/verify/', function(req,res)
     console.log("inside verify");
     console.log(req.body.username);
     methods.usermethods.findByUsername(req.body.username).then((users) =>{
-        console.log(users)
-            ad=ad+1;
-            var mesg = "16lh0"+ad;
+        console.log("users:",users)
+            
+            mesg=mesg+ad;
             methods.usermethods.setAdmno(mesg,req.body.username).then((val) =>{
             console.log(val);
             methods.usermethods.getAllUser()
@@ -60,4 +60,6 @@ router.post('/verify/', function(req,res)
     })
 
 })
+
+router.use(('/attendance'),require('./attendance'));
 module.exports = router;

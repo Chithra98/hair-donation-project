@@ -13,7 +13,7 @@ if (config.use_env_variable) {
 
 var usermethods = {};
 
-usermethods.getAllUser = () => new Promise((resolve,
+usermethods.getAllUser = () => {return new Promise((resolve,
     reject) => {
         models.user.findAll()
       .then((user) => {
@@ -24,7 +24,8 @@ usermethods.getAllUser = () => new Promise((resolve,
         reject(err);
       });
   });
-  usermethods.getUserByUsername = (user) => new Promise((resolve,
+}
+  usermethods.getUserByUsername = (user) => { return new Promise((resolve,
     reject) => {
       sequelize.query('SELECT * FROM Users WHERE Users.username = :username ',
       { replacements: { username: [user] }, type: sequelize.QueryTypes.SELECT }
@@ -37,12 +38,12 @@ usermethods.getAllUser = () => new Promise((resolve,
         reject(err);
       });
   });
+}
 
-usermethods.findByUsername = (username) => new Promise((resolve,
+usermethods.findByUsername = (username) => { return new Promise((resolve,
   reject) => {
     var Username = username;
       sequelize.query("UPDATE Users SET verified = true WHERE Users.username = :username", { replacements: { username: [Username] }, type: sequelize.QueryTypes.UPDATE } ).then((metadata) => {
-          console.log("metadata :");
           resolve(metadata[1]);
     }).catch((err) =>{
       console.log("error inside usermethods :", err);
@@ -50,17 +51,23 @@ usermethods.findByUsername = (username) => new Promise((resolve,
     })
   
   })
-
+}
   
-  usermethods.setAdmno = (mesg,username) => new Promise((resolve,
+  usermethods.setAdmno = (mesg,username) => {return new Promise((resolve,
   reject) => {
-    sequelize.query("UPDATE Users SET lhadmno = :mesg WHERE Users.username = :username", { replacements: { username: [username], mesg:[mesg] }, type: sequelize.QueryTypes.UPDATE } ).then((metadata) => {
-      resolve(metadata[1]);
-
-    })
-    .catch((err) =>{
-      console.log(err);
-    })
-  })
-
+    var user = username
+  
+     
+        sequelize.query("UPDATE Users SET lhadmno = :mesg WHERE Users.username = :username", { replacements: { username: [user], mesg:[mesg] }, type: sequelize.QueryTypes.UPDATE } ).then((metadata) => {
+          resolve(metadata[1]);
+    
+        })
+        .catch((err) =>{
+          console.log(err);
+          reject(err);
+  
+        })
+      })  
+  }
+  
 module.exports = usermethods;
