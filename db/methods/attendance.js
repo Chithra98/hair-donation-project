@@ -25,17 +25,17 @@ attendancemethods.getAllAttendance = () => new Promise(
             })
     })
 
-attendancemethods.createtable = (info) => new Promise(
-    (resolve,reject) =>{
- 
-        models.attendance.save(info).then(() =>{
-            console.log('saved');
-
-        })
-        .catch((err) =>{
-            console.log(err);
-            reject(err);
-        })
-    }
-)
-    module.exports = attendancemethods; 
+    attendancemethods.createtable = (info) => {
+        console.log('inside adding attendance');
+      
+        return new Promise((resolve, reject) => {
+          models.attendance.create(info).then((model) => {
+            resolve(model);
+          })
+            .catch((err) => {
+              console.log(err);
+              reject(err);
+            });
+        });
+      };
+   module.exports = attendancemethods; 

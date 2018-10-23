@@ -20,6 +20,7 @@ console.log(att);
 methods.attendancemethods.createtable(att)
 .then(() =>{
     console.log('inside attendance methods');
+    res.render('attendance')
 })
 .catch((err) =>{
     console.log(err);
