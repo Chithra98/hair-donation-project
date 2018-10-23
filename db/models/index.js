@@ -47,6 +47,7 @@ db.Sequelize = Sequelize;
 db.user = require('./user')(sequelize, Sequelize);
 db.admin = require('./admin')(sequelize, Sequelize);
 db.monthtab = require('./monthtab')(sequelize,Sequelize);
+db.attendance = require('./attendance')(sequelize,Sequelize);
 //db.articles = require('./articles')(sequelize, Sequelize);
 
 module.exports = db;
