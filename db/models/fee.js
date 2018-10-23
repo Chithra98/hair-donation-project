@@ -9,6 +9,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     Student_id : {
       type: DataTypes.INTEGER(),
+      unique: 'compositeIndex',
+
     },
     lhadmno: {
       type : DataTypes.STRING(20),
@@ -26,9 +28,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     fee: {
         type : DataTypes.INTEGER(),
-    },
- 
-  
+    }
   });
   Fee.associate = function (models) {
     models.Fee.belongsTo(models.User, {
