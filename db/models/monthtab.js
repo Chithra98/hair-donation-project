@@ -10,7 +10,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     Monthname: {
       type : DataTypes.STRING(20),
-      unique,
     },
     Duedate: {
       type : DataTypes.DATE(),

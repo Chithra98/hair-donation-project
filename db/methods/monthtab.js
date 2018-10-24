@@ -43,7 +43,7 @@ monthtabmethods.dueDifference = (monthid) => new Promise(
   resolve,
   reject,
 ) => {
-  models.expense.update(data, {
+  models.monthtab.update(data, {
     where: {
       Monthid: info.Monthid,
     },
@@ -61,4 +61,6 @@ monthtabmethods.dueDifference = (monthid) => new Promise(
 });
 
 
-   module.exports = monthtabmethods; 
+   module.exports = monthtabmethods; s
+
+   
