@@ -25,6 +25,17 @@ methods.expensemethods.createtable(exp)
 .then(() =>{
     console.log('inside expense methods');
     res.render('expense')
+    methods.expensemethods.findTotal(exp.Monthid).then((expense) =>{
+        console.log(expense)
+        methods.expensemethods.findOneDay(exp.Monthid).then((oneday) =>{
+            console.log(oneday)
+        })
+        .catch((err) =>{
+            console.log(err)
+        })
+    }).catch((err) =>{
+        console.log(err)
+    })
 })
 .catch((err) =>{
     console.log(err);

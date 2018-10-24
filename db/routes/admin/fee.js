@@ -33,7 +33,7 @@ router.post('/verify', function(req,res) {
     console.log(req.body.Month_id)
     methods.feemethods.setPaid(info).then((values) =>{
         console.log(values)
-        res.redirect('/pay')
+        res.redirect('/admin/fee/pay')
     })
     .catch((err) =>{
         console.log(err)

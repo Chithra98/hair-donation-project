@@ -15,7 +15,7 @@ if (config.use_env_variable) {
 var feemethods = {};
 feemethods.getAllFee = () => new Promise(
   (resolve, reject) =>{
-          sequelize.query("SELECT * FROM Fees;",{type: sequelize.QueryTypes.SELECT}).then((values) =>{
+          sequelize.query("SELECT * FROM Fees WHERE paymentstatus=0;",{type: sequelize.QueryTypes.SELECT}).then((values) =>{
               console.log(values);
               resolve(values);
           })
@@ -63,7 +63,7 @@ feemethods.findFine = (monthname,studentid) => new Promise(
       }
 feemethods.setPaid = (info) => new Promise(
   (resolve,reject) =>{
-    sequelize.query("UPDATE Fees SET paymentstatus=1 WHERE Month_id = :monthid AND lhadmno = :lhadmno",{replacements:{
+    sequelize.query("UPDATE Fees SET paymentstatus=1, fine=0 WHERE Month_id = :monthid AND lhadmno = :lhadmno",{replacements:{
      monthid : [info.Month_id], lhadmno : [info.lhadmno]
     },type: sequelize.QueryTypes.UPDATE}).
     then((values) =>{
