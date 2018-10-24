@@ -13,10 +13,10 @@ if (config.use_env_variable) {
 
 var monthtabmethods = {};
 
-monthtabmethods.dueDifference = (monthid) => new Promise(
+monthtabmethods.dueDifference = (monthname) => new Promise(
     (resolve, reject) =>{
-            sequelize.query("SELECT DATEDIFF(now(),(SELECT Duedate FROM Monthtabs WHERE Monthid=:monthid)) FROM Monthtabs",{replacements:{monthid:[monthid]},type: sequelize.QueryTypes.SELECT }).then((values) =>{
-                console.log(values);
+            sequelize.query("SELECT DATEDIFF(now(),(SELECT Duedate FROM Monthtabs WHERE Monthname=:monthname)) AS D FROM Monthtabs ;",{replacements:{monthname:[monthname]},type: sequelize.QueryTypes.SELECT }).then((values) =>{
+                console.log(values[0].D);
                 resolve(values);
             })
             .catch((err) =>{
@@ -61,6 +61,6 @@ monthtabmethods.dueDifference = (monthid) => new Promise(
 });
 
 
-   module.exports = monthtabmethods; s
+   module.exports = monthtabmethods; 
 
    

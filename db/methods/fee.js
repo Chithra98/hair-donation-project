@@ -14,10 +14,13 @@ if (config.use_env_variable) {
 
 var feemethods = {};
 
-feemethods.findFine = (monthid,studentid) => new Promise(
+feemethods.findFine = (monthname,studentid) => new Promise(
     (resolve, reject) =>{
-      methods.monthtabmethods.dueDifference(monthid).then((values)=>{
-        console.log(values)
+      methods.monthtabmethods.dueDifference(monthname).then((values)=>{
+        values = values*2;
+        if(values<0)
+        {}
+        else{
       sequelize.query("UPDATE Fees SET fine = :values WHERE Student_id= :studentid AND paymentstatus=0;",{replacements:{values:[values[0]],studentid : [studentid] }, type: sequelize.QueryTypes.SELECT}).then((values) =>{
         console.log(values);
         resolve(values);
@@ -26,7 +29,9 @@ feemethods.findFine = (monthid,studentid) => new Promise(
         console.log(err);
         reject(err)
       })
+    }
     })
+  
     .catch((err) =>{
     console.log(err)
     })
