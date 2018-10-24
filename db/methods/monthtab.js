@@ -15,7 +15,7 @@ var monthtabmethods = {};
 
 monthtabmethods.dueDifference = (monthid) => new Promise(
     (resolve, reject) =>{
-            sequelize.query("SELECT DATEDIFF(now(),(SELECT Duedate FROM Monthtabs WHERE Monthid=monthid)) FROM Monthtabs").then((values) =>{
+            sequelize.query("SELECT DATEDIFF(now(),(SELECT Duedate FROM Monthtabs WHERE Monthid=:monthid)) FROM Monthtabs",{replacements:{monthid:[monthid]},type: sequelize.QueryTypes.SELECT }).then((values) =>{
                 console.log(values);
                 resolve(values);
             })
