@@ -73,6 +73,17 @@ feemethods.findFine = (monthname,studentid) => new Promise(
       reject(error);
     });
 });
+ feemethods.getfee = (monthid,studentid) => new Promise(
+    (resolve, reject) =>{
+            sequelize.query("SELECT fee FROM Fees WHERE Month_id=monthid AND Student_id=studentid").then((values) =>{
+                console.log(values);
+                resolve(values);
+            })
+            .catch((err) =>{
+                console.log(err);
+                reject(err)
+            });
+    });
 
 
    module.exports = feemethods; 
