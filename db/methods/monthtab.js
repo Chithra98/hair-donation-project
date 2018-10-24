@@ -61,6 +61,6 @@ monthtabmethods.dueDifference = (monthid) => new Promise(
 });
 
 
-   module.exports = monthtabmethods; s
+   module.exports = monthtabmethods;
 
    

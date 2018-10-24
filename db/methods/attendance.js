@@ -25,6 +25,18 @@ attendancemethods.getAllAttendance = () => new Promise(
             })
     })
 
+attendancemethods.findTotal = (monthid) => new Promise(
+    (resolve, reject) =>{
+            sequelize.query("SELECT SUM(Attendance) FROM Attendances WHERE Month_id=monthid").then((values) =>{
+                console.log(values);
+                resolve(values);
+            })
+            .catch((err) =>{
+                console.log(err);
+                reject(err)
+            })
+    })
+
     attendancemethods.createtable = (info) => {
         console.log('inside adding attendance');
       
