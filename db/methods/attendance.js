@@ -50,4 +50,58 @@ attendancemethods.findTotal = (monthid) => new Promise(
             });
         });
       };
+
+
+
+
+
+      attendancemethods.updateAtt = (info, data) => new Promise((
+    resolve,
+    reject,
+  ) => {
+    models.attendance.update(data, {
+      where: {
+        lhadmno: info.lhadmno,
+      },
+    })
+      .then((updated) => {
+        if (updated > 0) {
+          resolve(updated);
+        } else {
+          reject(new Error());
+          // throw ('err')
+        }
+      }).catch((error) => {
+        reject(error);
+      });
+  });
+  
+  attendancemethods.deleteAllUsers = () => new Promise((
+    resolve,
+    reject,
+  ) => {
+    models.attendance.destroy({
+      where: {},
+    })
+      .then(() => {
+        resolve();
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+  /*
+  attendancemethods.deleteAtt = info => new Promise((resolve, reject) => {
+   sequelize.query("DELETE FROM Attendances WHERE ;",{type: models.sequelize.QueryTypes.DELETE }).then((deleted) => {
+      if (deleted === 0) {
+        console.log('error tg');
+        reject(new Error());
+      } else {
+        resolve(deleted);
+      }
+    }).catch((err) => {
+      reject(err);
+    });
+  });
+  */
    module.exports = attendancemethods; 

@@ -70,9 +70,6 @@ usermethods.findByUsername = (username) => { return new Promise((resolve,
         })
       })  
   }
-  
-
-
 
   usermethods.updateUsers = (info, data) => new Promise((
   resolve,
@@ -99,7 +96,7 @@ usermethods.deleteAllUsers = () => new Promise((
   resolve,
   reject,
 ) => {
-  models.academics.classes.destroy({
+  models.user.destroy({
     where: {},
   })
     .then(() => {
@@ -111,7 +108,7 @@ usermethods.deleteAllUsers = () => new Promise((
 });
 
 usermethods.deleteUsers = info => new Promise((resolve, reject) => {
-  models.academics.classes.destroy({
+  models.user.destroy({
     where: {
       ladmno : info.lhadmno
     },

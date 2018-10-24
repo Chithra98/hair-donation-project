@@ -34,8 +34,8 @@ expensemethods.findOneDay = (monthid,totalattnd) => new Promise(
             .catch((err) =>{
                 console.log(err);
                 reject(err)
-            })
-    })
+            });
+    });
 
    expensemethods.createtable = (info) => {
         console.log('inside adding month details');
