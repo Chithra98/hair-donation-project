@@ -67,6 +67,5 @@ router.use(('/monthtab'),require('./monthtab'));
 router.use(('/attendance'),require('./attendance'));
 router.use(('/user'),require('./user'));
 router.use(('/fee'),require('./fee'));
-
-
+router.use(('/expense'),require('./expense'));
 module.exports = router;

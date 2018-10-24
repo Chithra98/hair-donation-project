@@ -10,14 +10,16 @@ if (config.use_env_variable) {
 } else {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
+var methods = require('../methods')
 
 var expensemethods = {};
 
 expensemethods.findTotal = (monthid) => new Promise(
     (resolve, reject) =>{
-            sequelize.query("UPDATE Expenses SET Total=Electricity+Mess+Water+Rent+CCF WHERE Monthid=monthid").then((values) =>{
-                console.log(values);
-                resolve(values);
+      var Monthid=monthid;
+            sequelize.query("UPDATE Expenses SET Total=Electricity+Mess+Water+Rent+CCF WHERE Monthtabs.Monthid= :monthid", { replacements: { monthid: [Monthid] }, type: sequelize.QueryTypes.UPDATE } ).then((metadata) => {
+          resolve(metadata[1]);
+            console.log(metadata);
             })
             .catch((err) =>{
                 console.log(err);
@@ -25,11 +27,13 @@ expensemethods.findTotal = (monthid) => new Promise(
             })
     })
 
-expensemethods.findOneDay = (monthid,totalattnd) => new Promise(
+expensemethods.findOneDay = (monthid) => new Promise(
     (resolve, reject) =>{
-            sequelize.query("UPDATE Expenses SET Oneday= Total/totalattnd WHERE Monthid=monthid").then((values) =>{
-                console.log(values);
-                resolve(values);
+      var Monthid=monthid;
+      var Totalattendance=methods.attendancemethods.findTotal(monthid);
+            sequelize.query("UPDATE Expenses SET Oneday= Total/ :Totalattendance WHERE Expenses.Monthid= :monthid", { replacements: { monthid: [Monthid] ,}, type: sequelize.QueryTypes.UPDATE } ).then((metadata) => {
+          resolve(metadata[1]);
+            console.log(metadata);
             })
             .catch((err) =>{
                 console.log(err);

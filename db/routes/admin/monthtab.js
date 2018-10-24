@@ -27,20 +27,7 @@ methods.monthtabmethods.createtable(mon)
 })
 
 })
-router.get('/fun',function(req,res) {
 
-    methods.monthtabmethods.dueDifference('jan').then((month) =>{
-        console.log(month)
-        res.status(200).send({"success" : "true"})
-    })
-    .catch((err) =>{
-        console.log(err)
-        res.status(500).send({"success" : "false"})
-
-    })
-
-
-})
 //router.use(('/authenticate'),require('./authentication'));
 //router.use(('/admin'),require('./admin'));
 
