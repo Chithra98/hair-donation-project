@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+ 
+    hellooo world
+    <br>
+    
+    <% console.log(ret) %>
+    lhadmno month fee        
+    <br>
+    <% for(var i=0 ; i < ret.length ; i++){ %>
+    <form method="post" action="/admin/fee/verify/">
+    <input type="text" name="lhadmno"id="lhadmno" value= <%= ret[i].lhadmno %> > 
+    <input type="text" name="Month_id" id="Month_id" value= <%= ret[i].Month_id %> >
+        <% if(ret[i].paymentstatus==0) { %>
+    <input class="btn btn-info"type="submit" id="btn1" value="Pay" onclick="msg(btn1)">
+    <script>
+        function msg(btn1) {
+            alert("paid");
+            btn1.disabled = true;
+
+        }
+        </script>
+    <% } else { %>
+        <br>
+    <% } %>
+       
+    </form>
+
+    <% } %>
+
+
+</body>
+</html>

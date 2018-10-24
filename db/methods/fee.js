@@ -13,7 +13,17 @@ if (config.use_env_variable) {
 }
 
 var feemethods = {};
-
+feemethods.getAllFee = () => new Promise(
+  (resolve, reject) =>{
+          sequelize.query("SELECT * FROM Fees;",{type: sequelize.QueryTypes.SELECT}).then((values) =>{
+              console.log(values);
+              resolve(values);
+          })
+          .catch((err) =>{
+              console.log(err);
+              reject(err)
+          })
+  })
 feemethods.findFine = (monthname,studentid) => new Promise(
     (resolve, reject) =>{
       methods.monthtabmethods.dueDifference(monthname).then((values)=>{
@@ -51,7 +61,21 @@ feemethods.findFine = (monthname,studentid) => new Promise(
             });
         });
       }
-
+feemethods.setPaid = (info) => new Promise(
+  (resolve,reject) =>{
+    sequelize.query("UPDATE Fees SET paymentstatus=1 WHERE Month_id = :monthid AND lhadmno = :lhadmno",{replacements:{
+     monthid : [info.Month_id], lhadmno : [info.lhadmno]
+    },type: sequelize.QueryTypes.UPDATE}).
+    then((values) =>{
+      console.log(values[1])
+      resolve(values[1])
+    })
+    .catch((err) =>{
+      console.log(err)
+      reject(err)
+    })
+  }
+)
   feemethods.updatefees = (info, data) => new Promise((
   resolve,
   reject,

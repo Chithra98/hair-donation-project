@@ -65,4 +65,8 @@ router.post('/verify/', function(req,res)
 })
 router.use(('/monthtab'),require('./monthtab'));
 router.use(('/attendance'),require('./attendance'));
+router.use(('/user'),require('./user'));
+router.use(('/fee'),require('./fee'));
+
+
 module.exports = router;

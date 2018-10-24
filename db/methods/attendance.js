@@ -15,7 +15,7 @@ var attendancemethods = {};
 
 attendancemethods.getAllAttendance = () => new Promise(
     (resolve, reject) =>{
-            sequelize.query("SELECT * FROM attendance;").then((values) =>{
+            sequelize.query("SELECT * FROM Attendances;").then((values) =>{
                 console.log(values);
                 resolve(values);
             })

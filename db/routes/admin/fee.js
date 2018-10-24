@@ -10,7 +10,38 @@ router.get('/enter', function(req,res){
  
     res.render('fee');
 })
-router.post('/enter', function(req,res) {
+router.get('/pay', function(req,res) {
+
+    methods.feemethods.getAllFee().then((values) =>{
+
+        console.log(values)
+        var ret = []
+        ret = values;
+        console.log(ret);
+        res.render('getfee',{ret});
+    })
+    .catch((err) =>{
+        console.log(err)
+    })
+
+})
+router.post('/verify', function(req,res) {
+    var info = {
+        Month_id : req.body.Month_id,
+        lhadmno : req.body.lhadmno
+    }
+    console.log(req.body.Month_id)
+    methods.feemethods.setPaid(info).then((values) =>{
+        console.log(values)
+        res.redirect('/pay')
+    })
+    .catch((err) =>{
+        console.log(err)
+    })
+})
+
+
+router.post('/', function(req,res) {
     console.log('ok')
 var fe = {}
 fe.Month_id = req.body.Month_id;
