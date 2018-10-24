@@ -15,7 +15,7 @@ var expensemethods = {};
 
 expensemethods.findTotal = (monthid) => new Promise(
     (resolve, reject) =>{
-            sequelize.query("UPDATE Expenses SET Total=Electricity+Mess+Water+Rent+CCF WHERE Monthid=/'"+monthid + "';/",{type: sequelize.QueryTypes.UPDATE }).then((values) =>{
+            sequelize.query("UPDATE Expenses SET Total=Electricity+Mess+Water+Rent+CCF WHERE Monthid=monthid").then((values) =>{
                 console.log(values);
                 resolve(values);
             })
@@ -27,15 +27,15 @@ expensemethods.findTotal = (monthid) => new Promise(
 
 expensemethods.findOneDay = (monthid,totalattnd) => new Promise(
     (resolve, reject) =>{
-            sequelize.query("UPDATE Expenses SET Oneday= Total/totalattnd WHERE Monthid=/'"+monthid + "';/",{type: sequelize.QueryTypes.UPDATE }).then((values) =>{
+            sequelize.query("UPDATE Expenses SET Oneday= Total/totalattnd WHERE Monthid=monthid").then((values) =>{
                 console.log(values);
                 resolve(values);
             })
             .catch((err) =>{
                 console.log(err);
                 reject(err)
-            })
-    })
+            });
+    });
 
    expensemethods.createtable = (info) => {
         console.log('inside adding month details');
