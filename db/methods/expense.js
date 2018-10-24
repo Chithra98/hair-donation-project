@@ -1,6 +1,7 @@
 const Promise = require('bluebird');
 var models = require('../models');
 var Sequelize = require('sequelize');
+var methods = require('../methods')
 const env       = process.env.NODE_ENV || 'development';
 const config    = require('../config/config.json')[env];
 var sequelize ={};
@@ -17,9 +18,9 @@ var expensemethods = {};
 expensemethods.findTotal = (monthid) => new Promise(
     (resolve, reject) =>{
       var Monthid=monthid;
-            sequelize.query("UPDATE Expenses SET Total=Electricity+Mess+Water+Rent+CCF WHERE Monthtabs.Monthid= :monthid", { replacements: { monthid: [Monthid] }, type: sequelize.QueryTypes.UPDATE } ).then((metadata) => {
+            sequelize.query("UPDATE Expenses SET Total=Electricity+Mess+Water+Rent+CCF WHERE Monthid= :monthid", { replacements: { monthid: [Monthid] }, type: sequelize.QueryTypes.UPDATE } ).then((metadata) => {
           resolve(metadata[1]);
-            console.log(metadata);
+            console.log(metadata[1]);
             })
             .catch((err) =>{
                 console.log(err);
@@ -28,17 +29,34 @@ expensemethods.findTotal = (monthid) => new Promise(
     })
 
 expensemethods.findOneDay = (monthid) => new Promise(
-    (resolve, reject) =>{
+    (resolve, reject) =>
+    {
       var Monthid=monthid;
-      var Totalattendance=methods.attendancemethods.findTotal(monthid);
-            sequelize.query("UPDATE Expenses SET Oneday= Total/ :Totalattendance WHERE Expenses.Monthid= :monthid", { replacements: { monthid: [Monthid] ,}, type: sequelize.QueryTypes.UPDATE } ).then((metadata) => {
-          resolve(metadata[1]);
+      sequelize.query('SELECT Total FROM Expenses WHERE Monthid =:monthid;',{replacements:{monthid:[Monthid]},type: sequelize.QueryTypes.SELECT }).then((Total) =>{
+        console.log(Total[0].Total)
+        Total=Total[0].Total;
+        console.log(methods.attendancemethods)
+        methods.attendancemethods.findTotals(monthid).then((Totalattendance) =>{
+          console.log(Totalattendance)
+          sequelize.query("UPDATE Expenses SET Oneday= Total/ :Totalattendance WHERE Expenses.Monthid= :monthid", { replacements: { monthid: [Monthid] ,Totalattendance:[Totalattendance]}, type: sequelize.QueryTypes.UPDATE } ).then((metadata) => {
+            resolve(metadata[1]);
             console.log(metadata);
-            })
-            .catch((err) =>{
-                console.log(err);
-                reject(err)
-            });
+          })
+          .catch((err) =>{
+            console.log(err);
+            reject(err)
+        });
+      })
+      .catch((err) =>{
+        console.log(err)
+      })
+
+      })
+
+      .catch((err) =>{
+        console.log(err)
+      })
+       
     });
 
    expensemethods.createtable = (info) => {
