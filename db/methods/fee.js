@@ -4,7 +4,7 @@ var Sequelize = require('sequelize');
 const env       = process.env.NODE_ENV || 'development';
 const config    = require('../config/config.json')[env];
 var sequelize ={};
-const methods = require('../methods')
+const methods = require('../methods');
 
 if (config.use_env_variable) {
   sequelize = new Sequelize(process.env[config.use_env_variable]);
@@ -61,7 +61,7 @@ feemethods.findFine = (monthname,studentid) => new Promise(
       Monthid: info.Monthid,
     },
   })*/
-  sequelize.query('UPDATE Fees SET Fees = :data WHERE Monthid = :monthid',{ replacements:{monthid : [info.Monthid], data:[data]}, type: sequelize.QueryTypes.UPDATE })
+  sequelize.query('UPDATE Fees SET Fees = :data WHERE Monthid = :monthid AND lhadmno= :',{ replacements:{monthid : [info.Monthid], data:[data]}, type: sequelize.QueryTypes.UPDATE })
     .then((updated) => {
       if (updated > 0) {
         resolve(updated);
@@ -74,11 +74,13 @@ feemethods.findFine = (monthname,studentid) => new Promise(
     });
 });
  feemethods.getfee = (monthid,studentid) => new Promise(
-    (resolve, reject) =>{
-            sequelize.query("SELECT fee FROM Fees WHERE Month_id=monthid AND Student_id=studentid").then((values) =>{
-                console.log(values);
-                resolve(values);
-            })
+    (resolve, reject)) 
+    var Monthid=monthid;
+    var Studentid=studentid;
+    sequelize.query("SELECT fee FROM Fees WHERE Fees.Month_id=monthid AND Fees.Student_id=studentid",,{replacements:{monthid :[Monthid],studentid : [Studentid] }, type: sequelize.QueryTypes.SELECT}).then((values) =>{
+        console.log(values);
+        resolve(values);
+    })
             .catch((err) =>{
                 console.log(err);
                 reject(err)
