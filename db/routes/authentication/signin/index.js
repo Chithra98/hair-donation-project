@@ -79,6 +79,8 @@ router.get('/me', function(req, res) {
         })
         .catch((err) =>{
             console.log(err)
+            res.render('user',{val})
+
         })
       }).catch((err) =>{
           console.log(err);

@@ -1,60 +1,14 @@
-<!--<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    Hello world!!
 
-    <div>
-        <h3></h3>
-        <br>
-        <form method="post" action="/admin" >
-            <input type="text" id="username" name="username" placeholder="username"/>
-            <input type="password" id="password" name="password" placeholder="password"/>
-            <br>
-            <input class="btn btn-info" type="submit" value="Submit Button"/>
-        </form>
-     
-    </div>
-</body>
-</html>
--->
-
-<!--<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-        <h3>SignIn</h3>
-        <br>
-        <form method="post" action="/authenticate/signin" >
-            <input type="text" id="username" name="username" placeholder="username"/>
-            <input type="password" id="password" name="password" placeholder="password"/>
-            <br><br>
-            <input class="btn btn-info" type="submit" value="Submit Button"/>
-        </form>
-</body>
-</html>
-
--->
 <!DOCTYPE html>
 <html lang="en">
-<link href="/css/main.css" rel="stylesheet" type="text/css" />
+<link href="../css/main.css" rel="stylesheet" type="text/css" />
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link rel="stylesheet" type="text/css" href="/css/util.css">
-	<link rel="stylesheet" type="text/css" href="/css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
 
     
 </head>
@@ -68,7 +22,7 @@
 	<div class="limiter">
 		<div class="container-login100" style="background-image: url('images/img-01.jpg');">
 			<div class="wrap-login100 p-t-190 p-b-30">
-				<form class="login100-form validate-form" method="POST" action="/admin">
+				<form class="login100-form validate-form" method="GET" action="/authenticate/signin">
 					
 
 					<span class="login100-form-title p-t-20 p-b-45">
@@ -85,7 +39,7 @@
 <br />
 <br />
 					<div class="wrap-input100 validate-input m-b-10" data-validate = "Password is required">
-						<input class="input100" id="password" type="password" name="password" placeholder="Password">
+						<input class="input100" id="password" type="password" name="pass" placeholder="Password">
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-lock"></i>
@@ -98,9 +52,18 @@
 						</button>
 					</div>
 
-					
+					<div class="text-center w-full p-t-25 p-b-230">
+						<a href="#" class="txt1">
+							Forgot Username / Password?
+						</a>
+					</div>
 
-				
+					<div class="text-center w-full">
+						<a class="txt1" href="#">
+							Create new account
+							<i class="fa fa-long-arrow-right"></i>						
+						</a>
+					</div>
 				</form>
 			</div>
 		</div>

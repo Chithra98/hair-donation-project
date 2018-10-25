@@ -1,7 +1,7 @@
 const Promise = require('bluebird');
 var models = require('../models');
 var Sequelize = require('sequelize');
-var methods = require('../methods')
+var methods = require('../methods');
 const env       = process.env.NODE_ENV || 'development';
 const config    = require('../config/config.json')[env];
 var sequelize ={};
@@ -35,10 +35,11 @@ expensemethods.findOneDay = (monthid) => new Promise(
       sequelize.query('SELECT Total FROM Expenses WHERE Monthid =:monthid;',{replacements:{monthid:[Monthid]},type: sequelize.QueryTypes.SELECT }).then((Total) =>{
         console.log(Total[0].Total)
         Total=Total[0].Total;
-        console.log(methods.attendancemethods)
-        methods.attendancemethods.findTotals(monthid).then((Totalattendance) =>{
+        sequelize.query("SELECT SUM(Attendance) AS S FROM Attendances WHERE Attendances.Month_id= :monthid", { replacements: { monthid: [Monthid] }, type: sequelize.QueryTypes.SELECT } ).then((Totalattendance) =>{
           console.log(Totalattendance)
-          sequelize.query("UPDATE Expenses SET Oneday= Total/ :Totalattendance WHERE Expenses.Monthid= :monthid", { replacements: { monthid: [Monthid] ,Totalattendance:[Totalattendance]}, type: sequelize.QueryTypes.UPDATE } ).then((metadata) => {
+            Totalattendance = Totalattendance[0].S
+
+          sequelize.query("UPDATE Expenses SET Oneday= :Total/ :Totalattendance WHERE Expenses.Monthid= :monthid", { replacements: { Total:[Total], monthid: [Monthid] ,Totalattendance:[Totalattendance]}, type: sequelize.QueryTypes.UPDATE } ).then((metadata) => {
             resolve(metadata[1]);
             console.log(metadata);
           })
