@@ -1,6 +1,7 @@
 const Promise = require('bluebird');
 var models = require('../models');
 var Sequelize = require('sequelize');
+const methods = require('../methods')
 const env       = process.env.NODE_ENV || 'development';
 const config    = require('../config/config.json')[env];
 var sequelize ={};
@@ -13,7 +14,7 @@ if (config.use_env_variable) {
 
 var usermethods = {};
 
-usermethods.getAllUser = () => new Promise((resolve,
+usermethods.getAllUser = () => {return new Promise((resolve,
     reject) => {
         models.user.findAll()
       .then((user) => {
@@ -24,7 +25,8 @@ usermethods.getAllUser = () => new Promise((resolve,
         reject(err);
       });
   });
-  usermethods.getUserByUsername = (user) => new Promise((resolve,
+}
+  usermethods.getUserByUsername = (user) => { return new Promise((resolve,
     reject) => {
       sequelize.query('SELECT * FROM Users WHERE Users.username = :username ',
       { replacements: { username: [user] }, type: sequelize.QueryTypes.SELECT }
@@ -37,12 +39,12 @@ usermethods.getAllUser = () => new Promise((resolve,
         reject(err);
       });
   });
+}
 
-usermethods.findByUsername = (username) => new Promise((resolve,
+usermethods.findByUsername = (username) => { return new Promise((resolve,
   reject) => {
     var Username = username;
       sequelize.query("UPDATE Users SET verified = true WHERE Users.username = :username", { replacements: { username: [Username] }, type: sequelize.QueryTypes.UPDATE } ).then((metadata) => {
-          console.log("metadata :");
           resolve(metadata[1]);
     }).catch((err) =>{
       console.log("error inside usermethods :", err);
@@ -50,17 +52,76 @@ usermethods.findByUsername = (username) => new Promise((resolve,
     })
   
   })
-
+}
   
-  usermethods.setAdmno = (mesg,username) => new Promise((resolve,
+  usermethods.setAdmno = (mesg,username) => {return new Promise((resolve,
   reject) => {
-    sequelize.query("UPDATE Users SET lhadmno = :mesg WHERE Users.username = :username", { replacements: { username: [username], mesg:[mesg] }, type: sequelize.QueryTypes.UPDATE } ).then((metadata) => {
-      resolve(metadata[1]);
+    var name = username
+    console.log("mesg", mesg)
+     
+        sequelize.query("UPDATE Users SET lhadmno = :mesg WHERE Users.username = :username", { replacements: { username: [name], mesg:[mesg] }, type: sequelize.QueryTypes.UPDATE } ).then((metadata) => {
+          resolve(metadata[1]);
+    
+        })
+        .catch((err) =>{
+          console.log(err);
+          reject(err);
+  
+        })
+      })  
+  }
 
-    })
-    .catch((err) =>{
-      console.log(err);
-    })
+  usermethods.updateUsers = (info, data) => new Promise((
+  resolve,
+  reject,
+) => {
+  models.user.update(data, {
+    where: {
+      lhadmno: info.lhadmno,
+    },
   })
+    .then((updated) => {
+      if (updated > 0) {
+        resolve(updated);
+      } else {
+        reject(new Error());
+        // throw ('err')
+      }
+    }).catch((error) => {
+      reject(error);
+    });
+});
+
+usermethods.deleteAllUsers = () => new Promise((
+  resolve,
+  reject,
+) => {
+  models.user.destroy({
+    where: {},
+  })
+    .then(() => {
+      resolve();
+    })
+    .catch((err) => {
+      reject(err);
+    });
+});
+
+usermethods.deleteUsers = info => new Promise((resolve, reject) => {
+  models.user.destroy({
+    where: {
+      ladmno : info.lhadmno
+    },
+  }).then((deleted) => {
+    if (deleted === 0) {
+      console.log('error tg');
+      reject(new Error());
+    } else {
+      resolve(deleted);
+    }
+  }).catch((err) => {
+    reject(err);
+  });
+});
 
 module.exports = usermethods;

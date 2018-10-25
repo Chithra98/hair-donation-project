@@ -6,6 +6,7 @@ var ad=0;
 router.get('/', function(req,res)
 {
     res.status(200).json({"message" : "success"});
+    console.log('entered index')
 
 })
 router.post('/', function(req,res){
@@ -32,9 +33,11 @@ router.post('/verify/', function(req,res)
     console.log("inside verify");
     console.log(req.body.username);
     methods.usermethods.findByUsername(req.body.username).then((users) =>{
-        console.log(users)
+        console.log("users:",users)
+            
+            var mesg="16lh0";
             ad=ad+1;
-            var mesg = "16lh0"+ad;
+            mesg=mesg+ad;
             methods.usermethods.setAdmno(mesg,req.body.username).then((val) =>{
             console.log(val);
             methods.usermethods.getAllUser()
@@ -60,4 +63,9 @@ router.post('/verify/', function(req,res)
     })
 
 })
+router.use(('/monthtab'),require('./monthtab'));
+router.use(('/attendance'),require('./attendance'));
+router.use(('/user'),require('./user'));
+router.use(('/fee'),require('./fee'));
+router.use(('/expense'),require('./expense'));
 module.exports = router;

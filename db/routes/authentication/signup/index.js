@@ -42,9 +42,7 @@ router.post('/',function(req,res){
         
   
 
-    /*user.save().catch(error =>{
-      res.send(error);
-    });*/
+
   }
 });
 module.exports = router;
