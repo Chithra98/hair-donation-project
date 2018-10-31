@@ -60,7 +60,7 @@ methods.feemethods.createtable(fe)
 })
 
 })
-router.post('/updfee', function(req,res) =>{
+router.post('/updfee', function(req,res){
     var info = {}
     info.Month_id = req.body.monthid,
     
