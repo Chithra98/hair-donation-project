@@ -36,7 +36,8 @@ router.post('/', function(req,res) {
     
                     if(isMatch)
                     {
-                         token=jwt.sign(user.id,config,{
+                         token=jwt.sign(user.dataValues,config,{
+                             expiresIn : "1000ms"
                             
                             });
                         //res.cookie('jwt',token);
@@ -88,4 +89,12 @@ router.get('/me', function(req, res) {
     });
   });
 
+
+  router.post('/logout', function(req,res){
+      token=null;
+      //res.status(200).send("message");
+      //alert("Successfully logged out!");
+      var message = "Successfully logged out!!"
+     res.render('home',{message});
+  })
 module.exports = router;
