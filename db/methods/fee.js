@@ -14,11 +14,57 @@ if (config.use_env_variable) {
 
 var feemethods = {};
 
+feemethods.getAllFee = () => new Promise(
+  (resolve, reject) =>{
+          sequelize.query("SELECT * FROM Fees WHERE paymentstatus=0;",{type: sequelize.QueryTypes.SELECT}).then((values) =>{
+              console.log(values);
+              resolve(values);
+          })
+          .catch((err) =>{
+              console.log(err);
+              reject(err)
+          })
+  })
+
+  feemethods.calcFee = (monthid,studentid) => new Promise(
+    (resolve, reject) =>{
+            sequelize.query("SELECT  Attendance FROM Attendances WHERE Month_id=:monthid AND Student_id=:studentid;",{replacements:{monthid : [monthid],studentid:[studentid]},type: sequelize.QueryTypes.SELECT}).then((atten) =>{
+                console.log(atten);
+                //resolve(atten);
+                atten = atten[0].Attendance;
+
+                sequelize.query("SELECT  Oneday FROM Expenses WHERE Monthid=:monthid;",{replacements:{monthid:[monthid]},type: sequelize.QueryTypes.SELECT}).then((oneda) =>{
+                  console.log(oneda);
+                  oneda = oneda[0].Oneday;
+                  //resolve(oneda);
+                  sequelize.query("UPDATE  Fees SET fee=:oneda*:atten WHERE Month_id=:monthid AND Student_id=:studentid;",{replacements:{oneda:[oneda],atten:[atten],monthid:[monthid],studentid:[studentid]},type: sequelize.QueryTypes.UPDATE}).then((values) =>{
+                    console.log(values);
+                    resolve(values);
+                })
+                .catch((err) =>{
+                    console.log(err);
+                    reject(err)
+                })
+        
+              })
+              .catch((err) =>{
+                  console.log(err);
+                //  reject(err)
+              })
+            })
+            .catch((err) =>{
+                console.log(err);
+               // reject(err)
+            })
+           
+          
+    })
+
 feemethods.findFine = (monthname,studentid) => new Promise(
     (resolve, reject) =>{
       methods.monthtabmethods.dueDifference(monthname).then((values)=>{
         values = values*2;
-        if(values<0)
+        if(values<=0)
         {}
         else{
       sequelize.query("UPDATE Fees SET fine = :values WHERE Student_id= :studentid AND paymentstatus=0;",{replacements:{values:[values[0]],studentid : [studentid] }, type: sequelize.QueryTypes.SELECT}).then((values) =>{
@@ -40,7 +86,7 @@ feemethods.findFine = (monthname,studentid) => new Promise(
 
    feemethods.createtable = (info) => {
         console.log('inside adding month details');
-      
+      console.log(info)
         return new Promise((resolve, reject) => {
           models.fee.create(info).then((model) => {
             resolve(model);
