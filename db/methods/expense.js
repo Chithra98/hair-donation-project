@@ -11,7 +11,7 @@ if (config.use_env_variable) {
 } else {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
-var methods = require('../methods')
+var methods = require('../methods');
 
 var expensemethods = {};
 
@@ -36,8 +36,9 @@ expensemethods.findOneDay = (monthid) => new Promise(
         console.log(Total[0].Total)
         Total=Total[0].Total;
         console.log(methods.attendancemethods)
-        methods.attendancemethods.findTotals(monthid).then((Totalattendance) =>{
+              sequelize.query('SELECT SUM(Attendance) AS S FROM Attendances WHERE Month_id =:monthid;',{replacements:{monthid:[Monthid]},type: sequelize.QueryTypes.SELECT }).then((Totalattendance) =>{
           console.log(Totalattendance)
+          Totalattendance = Totalattendance[0].S;
           sequelize.query("UPDATE Expenses SET Oneday= Total/ :Totalattendance WHERE Expenses.Monthid= :monthid", { replacements: { monthid: [Monthid] ,Totalattendance:[Totalattendance]}, type: sequelize.QueryTypes.UPDATE } ).then((metadata) => {
             resolve(metadata[1]);
             console.log(metadata);

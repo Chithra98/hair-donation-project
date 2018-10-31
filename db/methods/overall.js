@@ -17,7 +17,7 @@ abs.findfee = (monthid,studentid) => new Promise(
     (resolve, reject) =>{
       var Monthid=monthid;
       var Studentid=studentid;
-            sequelize.query("SELECT Expenses.Oneday*Attendances.Attendance WHERE Expenses.Monthid= :monthid AND Attendances.Month_id= :monthid AND Attendances.Student_id= :studentid",{ replacements: { monthid: [Monthid] ,studentid: [Studentid]}, type: sequelize.QueryTypes.SELECT } ).then((metadata) => {
+            sequelize.query("SELECT Expenses.Oneday*Attendances.Attendance FROM Expenses WHERE Expenses.Monthid= :monthid AND Attendances.Month_id= :monthid AND Attendances.Student_id= :studentid",{ replacements: { monthid: [Monthid] ,studentid: [Studentid]}, type: sequelize.QueryTypes.SELECT } ).then((metadata) => {
           resolve(metadata[1]);
             console.log(metadata);
             })

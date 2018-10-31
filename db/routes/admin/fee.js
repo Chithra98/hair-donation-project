@@ -60,6 +60,12 @@ methods.feemethods.createtable(fe)
 })
 
 })
+router.post('/updfee', function(req,res) =>{
+    var info = {}
+    info.Month_id = req.body.monthid,
+    
+    methods.feemethods.calculateFee()
+})
 //router.use(('/authenticate'),require('./authentication'));
 //router.use(('/admin'),require('./admin'));
 

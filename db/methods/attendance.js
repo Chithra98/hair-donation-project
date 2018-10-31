@@ -15,7 +15,7 @@ var attendancemethods = {};
 
 attendancemethods.getAllAttendance = () => new Promise(
     (resolve, reject) =>{
-            sequelize.query("SELECT * FROM Attendances;").then((values) =>{
+            sequelize.query("SELECT * FROM attendance;").then((values) =>{
                 console.log(values);
                 resolve(values);
             })
@@ -25,7 +25,7 @@ attendancemethods.getAllAttendance = () => new Promise(
             })
     })
 
-attendancemethods.findTotals = (monthid) => new Promise(
+attendancemethods.findTotal = (monthid) => new Promise(
     (resolve, reject) =>{
       var Monthid=monthid;
             sequelize.query("SELECT SUM(Attendance) FROM Attendances WHERE Attendances.Month_id= :monthid", { replacements: { monthid: [Monthid] }, type: sequelize.QueryTypes.SELECT } ).then((metadata) => {
@@ -38,7 +38,7 @@ attendancemethods.findTotals = (monthid) => new Promise(
             })
     })
 
-attendancemethods.createtable = (info) => {
+    attendancemethods.createtable = (info) => {
         console.log('inside adding attendance');
       
         return new Promise((resolve, reject) => {
