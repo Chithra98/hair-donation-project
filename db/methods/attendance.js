@@ -26,7 +26,6 @@ attendancemethods.getAllAttendance = () => new Promise(
     })
 
 attendancemethods.findTotal = (monthid) => new Promise(
-attendancemethods.totalCount = (monthid) => new Promise(
     (resolve, reject) =>{
       var Monthid=monthid;
             sequelize.query("SELECT SUM(Attendance) FROM Attendances WHERE Attendances.Month_id= :monthid", { replacements: { monthid: [Monthid] }, type: sequelize.QueryTypes.SELECT } ).then((metadata) => {
